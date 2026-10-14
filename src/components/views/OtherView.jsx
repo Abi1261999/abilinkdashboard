@@ -1,0 +1,21 @@
+import {
+  ArrowRight, CircleHelp, FileBarChart, FolderKanban, ListTodo,
+  MoreHorizontal, Settings, Sparkles, Users
+} from "lucide-react";
+import { motion } from "framer-motion";
+import { colorMap, initialTasks, projects, team } from "../../data/workspaceData";
+
+export default function OtherView({active,onBack,notify}) {
+  const data = {
+    Projects:{icon:FolderKanban,title:"Your projects",desc:"Keep every initiative moving in the right direction.",cards:projects.map(p=>({title:p.name,desc:`${p.type} · ${p.tasks}`,value:`${p.progress}% complete`,color:p.color}))},
+    "My tasks":{icon:ListTodo,title:"My tasks",desc:"Your personal task space, all in one place.",cards:initialTasks.map(t=>({title:t.title,desc:`${t.project} · Due ${t.due}`,value:t.priority,color:t.color}))},
+    Team:{icon:Users,title:"Meet your team",desc:"The people making great work happen.",cards:team.map(t=>({title:t.name,desc:t.role,value:t.status,color:t.color}))},
+    Reports:{icon:FileBarChart,title:"Reports & insights",desc:"A quick look at your workspace performance.",cards:[{title:"Tasks completed",desc:"Across all active projects",value:"128 this month",color:"violet"},{title:"Project delivery",desc:"Projects on track",value:"92%",color:"blue"},{title:"Team productivity",desc:"Compared to last month",value:"+18.6%",color:"pink"}]},
+    Settings:{icon:Settings,title:"Workspace settings",desc:"Manage your workspace preferences.",cards:[{title:"Profile settings",desc:"Update your name and profile details",value:"Manage",color:"violet"},{title:"Notifications",desc:"Choose which updates you receive",value:"Manage",color:"blue"},{title:"Security",desc:"Review account security options",value:"Manage",color:"pink"}]},
+    "Help center":{icon:CircleHelp,title:"How can we help?",desc:"Find answers and get support for your workspace.",cards:[{title:"Getting started",desc:"Learn the basics of AbiLink",value:"Open guide",color:"violet"},{title:"Project management",desc:"Organize work with your team",value:"Read article",color:"blue"},{title:"Contact support",desc:"Reach out to our support team",value:"Get help",color:"pink"}]},
+    "Upgrade plan":{icon:Sparkles,title:"Upgrade your workspace",desc:"Unlock more ways to help your team do its best work.",cards:[{title:"AbiLink Pro",desc:"Advanced reporting and automations",value:"$14 / user / month",color:"violet"},{title:"AbiLink Scale",desc:"More control for growing organizations",value:"$29 / user / month",color:"blue"}]},
+  };
+  const view=data[active]||data.Projects;
+  const Icon=view.icon;
+  return <motion.section initial={{opacity:0,y:12}} animate={{opacity:1,y:0}} className="py-2"><div className="flex items-center gap-3"><span className="flex h-12 w-12 items-center justify-center rounded-2xl bg-brand-100 text-brand-700"><Icon size={23}/></span><div><p className="text-sm font-semibold text-brand-700">Workspace</p><h1 className="font-display text-2xl font-extrabold text-slate-900">{view.title}</h1></div></div><p className="mt-4 text-sm text-slate-500">{view.desc}</p><div className="mt-7 grid gap-4 sm:grid-cols-2 xl:grid-cols-3">{view.cards.map((card,i)=><motion.article key={card.title} initial={{opacity:0,y:10}} animate={{opacity:1,y:0}} transition={{delay:i*.05}} className="rounded-2xl border border-slate-100 bg-white p-5 shadow-panel"><div className="flex items-center justify-between"><span className={`flex h-10 w-10 items-center justify-center rounded-xl ${colorMap[card.color]}`}><Icon size={19}/></span><button onClick={()=>notify(`${card.title} selected`)} className="rounded-lg p-1.5 text-slate-400 hover:bg-slate-50"><MoreHorizontal size={18}/></button></div><h2 className="mt-5 font-display font-extrabold text-slate-900">{card.title}</h2><p className="mt-1 text-sm text-slate-500">{card.desc}</p><div className="mt-4 flex items-center justify-between border-t border-slate-100 pt-4"><span className="text-xs font-bold text-brand-700">{card.value}</span><button onClick={()=>notify(`${card.title} — demo action`)} className="text-brand-600 hover:text-brand-800"><ArrowRight size={17}/></button></div></motion.article>)}</div><button onClick={onBack} className="primary-btn mt-7">Back to overview <ArrowRight size={16}/></button></motion.section>;
+}
