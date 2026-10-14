@@ -63,7 +63,7 @@ export default function App() {
       </AnimatePresence>
       <Sidebar active={active} onSelect={chooseNav} mobileOpen={mobileOpen} onClose={()=>setMobileOpen(false)} />
 
-      <div className="min-h-screen md:pl-[258px]">
+      <div className="min-h-screen md:pl-3">
         <header className="sticky top-0 z-30 border-b border-slate-200/70 bg-white/90 backdrop-blur-xl">
           <div className="flex h-[74px] items-center justify-between gap-3 px-4 sm:px-7 lg:px-9">
             <div className="flex min-w-0 items-center gap-3">
