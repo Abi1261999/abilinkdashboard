@@ -1,0 +1,4 @@
+[build]
+  # Install dependencies when they are missing (e.g. CLI deploys from a fresh checkout)
+  command = "([ -x node_modules/.bin/vite ] || npm ci) && npm run build"
+  publish = "dist"
