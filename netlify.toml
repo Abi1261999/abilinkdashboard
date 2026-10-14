@@ -1,0 +1,4 @@
+[build]
+  # Install dependencies (including devDependencies such as vite) before building
+  command = "npm ci --include=dev && npm run build"
+  publish = "dist"
